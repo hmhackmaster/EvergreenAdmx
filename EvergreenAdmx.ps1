@@ -30,7 +30,7 @@
 .PARAMETER WindowsFeatureVersion
     Specifies Windows 10 or 11 feature version to get the Admx files for.
     Valid values are: 1903, 1909, 2004, 20H2, 21H1, 21H2, 22H2 for Windows 10.
-    Valid values are: 21H2, 22H2, 23H2, 24H2 for Windows 11.
+    Valid values are: 21H2, 22H2, 23H2, 24H2, 25H2 for Windows 11.
     Defaults to 24H2.
 
     Note: Windows 11 23H2 policy definitions now supports Windows 10.
@@ -100,7 +100,7 @@ param(
     [ValidateSet('10', '11', '2022', '2025')]
     [System.String] $WindowsVersion = '11',
     [Alias('WindowsFeatureEdition')]
-    [ValidateSet('1903', '1909', '2004', '20H2', '21H1', '21H2', '22H2', '23H2', '24H2')]
+    [ValidateSet('1903', '1909', '2004', '20H2', '21H1', '21H2', '22H2', '23H2', '24H2', '25H2')]
     [System.String] $WindowsFeatureVersion = $(
         switch ($WindowsVersion) {
             '10' { '22H2' }
@@ -651,12 +651,12 @@ function Get-WindowsDownloadId {
         [ValidateScript({
                 if ($WindowsVersion -eq '10' -and $_ -in @('1903', '1909', '2004', '20H2', '21H1', '21H2', '22H2')) {
                     return $true
-                } elseif ($WindowsVersion -eq '11' -and $_ -in @('21H2', '22H2', '23H2', '24H2')) {
+                } elseif ($WindowsVersion -eq '11' -and $_ -in @('21H2', '22H2', '23H2', '24H2', '25H2')) {
                     return $true
                 } elseif ($WindowsVersion -eq '2022' -or $WindowsVersion -eq '2025') {
                     return $true
                 } else {
-                    throw "Invalid Windows Feature Version '$_' for Windows $WindowsVersion. Windows 10 supports: 1903, 1909, 2004, 20H2, 21H1, 21H2, 22H2. Windows 11 supports: 21H2, 22H2, 23H2, 24H2. Windows 2022 and 2025 has no Windows Feature Versions."
+                    throw "Invalid Windows Feature Version '$_' for Windows $WindowsVersion. Windows 10 supports: 1903, 1909, 2004, 20H2, 21H1, 21H2, 22H2. Windows 11 supports: 21H2, 22H2, 23H2, 24H2, 25H2. Windows 2022 and 2025 has no Windows Feature Versions."
                 }
             })]
         [ValidateNotNullOrEmpty()]
@@ -669,7 +669,7 @@ function Get-WindowsDownloadId {
             break
         }
         11 {
-            return (@( @{ '21H2' = '103507' }, @{ '22H2' = '104593' }, @{ '23H2' = '105667' }, @{ '24H2' = '106254' } ).$WindowsFeatureVersion)
+            return (@( @{ '21H2' = '103507' }, @{ '22H2' = '104593' }, @{ '23H2' = '105667' }, @{ '24H2' = '106254' }, @{ '25H2' = '108428' } ).$WindowsFeatureVersion)
             break
         }
         2022 {
@@ -677,7 +677,7 @@ function Get-WindowsDownloadId {
             break
         }
         2025 {
-            return @( '106295' )
+            return @( '108430' )
             break
         }
     }
