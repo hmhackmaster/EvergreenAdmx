@@ -754,14 +754,12 @@ function Get-EvergreenAdmxOneDrive {
             $isOneDriveInstalled = $true
             $OneDriveInstalledVersion = $UserInstall.DisplayVersion
             $global:oneDriveADMXFolder = (Get-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\OneDrive').CurrentVersionPath
-        }
-        If (-not [string]::IsNullOrWhiteSpace($Systemx64Install)) {
+        } elseif (-not [string]::IsNullOrWhiteSpace($Systemx64Install)) {
             Write-Verbose "System x64 OneDrive install found: $($Systemx64Install.DisplayVersion)"
             $isOneDriveInstalled = $true
             $OneDriveInstalledVersion = $Systemx64Install.DisplayVersion
             $global:oneDriveADMXFolder = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\OneDrive').CurrentVersionPath
-        }
-        If (-not [string]::IsNullOrWhiteSpace($Systemx86Install)) {
+        } elseif (-not [string]::IsNullOrWhiteSpace($Systemx86Install)) {
             Write-Verbose "System x86 OneDrive install found: $($Systemx86Install.DisplayVersion )"
             $isOneDriveInstalled = $true
             $OneDriveInstalledVersion = $Systemx86Install.DisplayVersion
